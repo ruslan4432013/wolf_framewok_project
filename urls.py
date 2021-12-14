@@ -4,4 +4,6 @@ from views import *
 routes = {
     '/': Index(),
     '/about/': About(),
+    '/contact/': Contact(),
+    '/help/': Help()
 }

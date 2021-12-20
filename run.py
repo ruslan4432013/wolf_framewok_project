@@ -2,7 +2,7 @@ from wsgiref.simple_server import make_server
 from wolf_framework.main import Framework
 from urls import routes
 
-# Создаем обхект WSGI-приложения
+# Создаем объект WSGI-приложения
 application = Framework(routes)
 
 with make_server('', 8080, application) as httpd:

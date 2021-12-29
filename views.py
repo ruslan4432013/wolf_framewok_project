@@ -14,7 +14,7 @@ class About:
 
 class Contact:
     def __call__(self, request):
-        return '200 OK', 'Contacts'
+        return '200 OK', render('contacts.html')
 
 
 class Help:

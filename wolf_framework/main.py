@@ -1,3 +1,4 @@
+import json
 import quopri
 from framework_requests import GetRequests, PostRequests
 
@@ -29,6 +30,9 @@ class Framework:
             data = PostRequests().get_request_params(environ)
             request['data'] = data
             print(f'Нам пришел POST запрос: {Framework.decode_value(data)}')
+            with open('data_from_user.txt', 'a+', encoding='utf-8') as file:
+                file.write(json.dumps(Framework.decode_value(data)) + '\n')
+            print('Данные успешно записаны в файл')
         if method == 'GET':
             request_params = GetRequests().get_request_params(environ)
             request['request_params'] = request_params
@@ -54,3 +58,4 @@ class Framework:
             val_decode_str = quopri.decodestring(val).decode('UTF-8')
             new_data[k] = val_decode_str
         return new_data
+

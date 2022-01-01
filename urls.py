@@ -4,6 +4,11 @@ from views import *
 routes = {
     '/': Index(),
     '/about/': About(),
+    '/study_programs/': StudyPrograms(),
+    '/courses-list/': CoursesList(),
+    '/create-course/': CreateCourse(),
+    '/create-category/': CreateCategory(),
+    '/category-list/': CategoryList(),
     '/contact/': Contact(),
     '/help/': Help()
 }

@@ -1,4 +1,4 @@
-from views import *
+from views_like_django import *
 
 # Набор привязок: путь-контроллер
 routes = {

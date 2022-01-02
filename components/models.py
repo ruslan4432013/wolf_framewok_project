@@ -3,7 +3,8 @@ import quopri
 
 # Класс-Абстрактный пользователь
 class User:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 
 # Класс-преподаватель
@@ -13,7 +14,9 @@ class Teacher(User):
 
 # Класс-Студент
 class Student(User):
-    pass
+    def __init__(self, name):
+        self.courses = []
+        super().__init__(name)
 
 
 # Класс-Фабрика пользователей
@@ -24,8 +27,8 @@ class UserFactory:
     }
 
     @classmethod
-    def create(cls, type_):
-        return cls.types[type_]
+    def create(cls, type_, name):
+        return cls.types[type_](name)
 
 
 # Класс-Курс
@@ -34,6 +37,16 @@ class Course:
         self.name = name
         self.category = category
         self.category.courses.append(self)  # Добавляем курс к какой-либо категории
+        self.students = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.students[item]
+
+    def add_student(self, student: Student):
+        self.students.append(student)
+        student.courses.append(self)
+
 
 
 # Класс-Интерактивный курс
@@ -91,8 +104,8 @@ class Engine:
         self.sub_categories = []
 
     @staticmethod
-    def create_user(type_):
-        return UserFactory.create(type_)
+    def create_user(type_, name):
+        return UserFactory.create(type_, name)
 
     @staticmethod
     def create_category(name, category=None):
@@ -114,6 +127,11 @@ class Engine:
             if item.name == name:
                 return item
         return None
+
+    def get_student(self, name):
+        for item in self.students:
+            if item.name == name:
+                return item
 
     @staticmethod
     def decode_value(val):

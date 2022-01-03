@@ -1,8 +1,6 @@
 ﻿{% extends "base.html" %}
 {% block title %} Обучение программированию {% endblock %}
-{% block style %}
-{% include "inc-style.html" %}
-{% endblock %}
+
 {% block menu %}
 {% include "inc-menu.html" %}
 {% endblock %}
@@ -38,6 +36,9 @@
         <a href="/update-student/">Изменить студента</a>
     </li>
 </div>
+
+<p><img src="{{ static }}images/chef-3.jpg" alt="text"></p>
+
 {% endblock %}
 
 {% block footer %}

@@ -16,7 +16,7 @@ class AppRoute:
 
 # Декоратор, как функция (из дз)
 def app_route(routes: dict, url):
-    def decorator(func):
-        routes[url] = func()
+    def decorator(cls):
+        routes[url] = cls()
         return routes
     return decorator

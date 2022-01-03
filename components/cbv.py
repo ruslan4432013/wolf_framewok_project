@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from wolf_framework.templator import render
 
 
@@ -56,6 +58,48 @@ class CreateView(TemplateView):
             # метод пост
             data = self.get_request_data(request)
             self.create_obj(data)
+            return self.render_template_with_context()
+        else:
+            return super().__call__(request)
+
+
+# Класс-контроллер для удаления записей
+class DeleteView(TemplateView):
+    template_name = 'delete.html'
+
+    @staticmethod
+    def get_request_data(request):
+        return request['data']
+
+    @abstractmethod
+    def delete_obj(self, data):
+        pass
+
+    def __call__(self, request):
+        if request['method'] == 'POST':
+            data = self.get_request_data(request)
+            self.delete_obj(data)
+            return self.render_template_with_context()
+        else:
+            return super().__call__(request)
+
+
+# Класс-контроллер для обновления записей
+class UpdateView(TemplateView):
+    template_name = 'delete.html'
+
+    @staticmethod
+    def get_request_data(request):
+        return request['data']
+
+    @abstractmethod
+    def update_obj(self, data):
+        pass
+
+    def __call__(self, request):
+        if request['method'] == 'POST':
+            data = self.get_request_data(request)
+            self.update_obj(data)
             return self.render_template_with_context()
         else:
             return super().__call__(request)

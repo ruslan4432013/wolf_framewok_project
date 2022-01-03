@@ -48,7 +48,6 @@ class Course:
         student.courses.append(self)
 
 
-
 # Класс-Интерактивный курс
 class InteractiveCourse(Course):
     pass
@@ -106,6 +105,13 @@ class Engine:
     @staticmethod
     def create_user(type_, name):
         return UserFactory.create(type_, name)
+
+    def delete_user(self, type_, name):
+        match type_:
+            case 'student':
+                self.students.remove(name)
+            case 'teacher':
+                self.teacher.remove(name)
 
     @staticmethod
     def create_category(name, category=None):

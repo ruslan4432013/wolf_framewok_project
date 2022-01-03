@@ -3,7 +3,7 @@ from datetime import date
 from wolf_framework.templator import render
 from components.models import Engine
 from components.decorators import AppRoute
-from components.cbv import ListView, CreateView
+from components.cbv import ListView, CreateView, DeleteView, UpdateView
 
 site = Engine()
 routes = {}
@@ -158,7 +158,7 @@ class StudentCreateView(CreateView):
 # Класс-контроллер - Страница "Добавить студента на курс"
 @AppRoute(routes=routes, url='/add-student/')
 class AddStudentByCourseCreateView(CreateView):
-    template_name = 'add-student.html'
+    template_name = 'add_student.html'
 
     def get_context_data(self):
         context = super().get_context_data()
@@ -174,3 +174,39 @@ class AddStudentByCourseCreateView(CreateView):
         student_name = site.decode_value(student_name)
         student = site.get_student(student_name)
         course.add_student(student)
+
+
+# Класс-контроллер - Страница "Удалить студента"
+@AppRoute(routes=routes, url='/delete-student/')
+class StudentDeleteView(DeleteView):
+    template_name = 'delete_student.html'
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['students'] = site.students
+        return context
+
+    def delete_obj(self, data: dict):
+        name = data['student_name']
+        name = site.decode_value(name)
+        name = site.get_student(name)
+        site.delete_user('student', name)
+
+
+# Класс-контроллер - Страница "Обновить студента"
+@AppRoute(routes=routes, url='/update-student/')
+class StudentUpdateView(UpdateView):
+    template_name = 'update_student.html'
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['students'] = site.students
+        return context
+
+    def update_obj(self, data: dict):
+        name = data['student_name']
+        name = site.decode_value(name)
+        user = site.get_student(name)
+        new_name = data['new_student_name']
+        new_name = site.decode_value(new_name)
+        user.name = new_name
